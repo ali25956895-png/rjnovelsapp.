@@ -25,11 +25,18 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Create Full Flutter App Skeleton
+        run: |
+          rm -rf *
+          flutter create . --org com.rjking.novels --project-name rj_king_novels
+
+      - name: Restore Custom Application Files
+        run: |
+          git checkout HEAD -- main.dart pubspec.yaml
+          mv main.dart lib/main.dart
+
       - name: Install Project Dependencies
         run: flutter pub get
-
-      - name: Create Skeleton Android Folder
-        run: flutter create . --platforms=android
 
       - name: Build Android Release APK
         run: flutter build apk --release
